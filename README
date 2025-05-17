@@ -1,174 +1,192 @@
-# Cybersecurity Compliance Chatbot (RAG-based)
+Here’s your fully updated README.md with clean formatting, correct screenshot paths, and updated descriptions for your RAG-based cybersecurity chatbot project.
 
-Welcome to the official repository of the **Cybersecurity Compliance Chatbot**. This is a powerful and visually elegant chatbot that answers questions related to the **NIST Cybersecurity Framework (CSF) Version 2.0** using **RAG (Retrieval-Augmented Generation)** powered by **OpenAI** and **Pinecone**.
+✅ Make sure your screenshots/ folder is in the root of the project and contains:
+home.png, chat-ui.png, about-rag1.png, about-rag2.png, about-rag3.png.
 
-![Chatbot UI Screenshot](./screenshots/chat-ui.png)
+⸻
 
-## 🔧 Tech Stack
 
-* **Frontend**: React + Vite + Tailwind CSS
-* **Backend**: Node.js + Express.js
-* **Embedding & Generation**: OpenAI (GPT-3.5 Turbo + `text-embedding-3-small`)
-* **Vector Search**: Pinecone Vector DB
-* **UI Styling**: Orbitron & Poppins fonts, dark theme, neon accents
+# 🛡️ Cybersecurity Compliance Chatbot (RAG-based)
+
+Welcome to the official repository of the **Cybersecurity Compliance Chatbot**. This chatbot helps users query and understand the **NIST Cybersecurity Framework (CSF) Version 2.0**, using a **RAG (Retrieval-Augmented Generation)** architecture powered by **OpenAI** and **Pinecone**.
+
+Built with modern web technologies and designed for security engineers, auditors, and compliance professionals.
 
 ---
 
-## 💬 What the Chatbot Can Do
+## 🔧 Tech Stack
 
-* Answer questions about:
+- **Frontend**: React + Vite + Tailwind CSS
+- **Backend**: Node.js + Express.js
+- **Embedding**: OpenAI (`text-embedding-3-small`)
+- **Generation**: OpenAI GPT-3.5 Turbo
+- **Vector DB**: Pinecone (for semantic chunk retrieval)
+- **Styling**: Orbitron & Poppins fonts, dark UI with neon accents
 
-  * Access control
-  * Security procedures
-  * Risk management
-  * Logging, recovery, and compliance concepts
-* Provide architecture answers:
+---
 
-  * Who built the chatbot
-  * What technologies were used
-  * How it's different from standard ChatGPT
+## 💬 What This Chatbot Can Do
+
+- Answer questions from the NIST CSF v2.0 like:
+  - Access control
+  - Security procedures
+  - Audit logging
+  - Risk management
+  - Recovery and response planning
+
+- Answer technical chatbot queries:
+  - Who created this chatbot?
+  - What stack is used?
+  - How is it different from ChatGPT?
+  - Does it use vector search?
+  - What is Pinecone and how does it retrieve?
 
 ---
 
 ## ⚙️ How It Works (RAG Architecture)
 
-This chatbot is built on **Retrieval-Augmented Generation**:
+This project uses **Retrieval-Augmented Generation (RAG)**:
 
-1. **Chunking**: The NIST CSF PDF is split into small paragraphs.
-2. **Embedding**: Each chunk is converted to a 1536-dimension vector using OpenAI.
-3. **Storage**: Chunks + metadata are stored in Pinecone.
-4. **Querying**: User question is embedded and queried against Pinecone.
-5. **Retrieval**: Top 5 similar chunks are sent as context to ChatGPT.
-6. **Response**: GPT-3.5 responds based ONLY on that context.
+1. The NIST CSF PDF is split into chunks (paragraphs).
+2. Each chunk is embedded into a 1536-dimension vector using OpenAI.
+3. Vectors are stored in Pinecone with text metadata.
+4. When a question is asked:
+   - The question is also embedded into a vector.
+   - Pinecone returns the top 5 most relevant chunks.
+   - These are used as context to GPT-3.5.
+5. GPT-3.5 generates a final answer based ONLY on this context.
 
 ---
 
 ## 📁 Folder Structure
 
-```
+cyber_RAG_chatbot/
+│
 ├── backend/
-│   └── server.js                # Express backend
+│   └── server.js                # Express backend with OpenAI + Pinecone integration
+│
 ├── frontend/
-│   ├── src/
-│   │   ├── App.tsx             # Routes and layout
-│   │   ├── components/
-│   │   │   └── ChatBox.tsx     # Main chatbot UI
-│   │   └── pages/
-│   │       ├── Home.tsx        # Chat page with intro
-│   │       └── AboutChatbot.tsx# RAG explanation + PDF
-│   └── public/data.pdf         # NIST CSF v2.0 file
+│   └── my-react-app/
+│       ├── src/
+│       │   ├── components/
+│       │   │   └── ChatBox.tsx  # Chat UI logic
+│       │   └── pages/
+│       │       ├── Home.tsx     # Main UI
+│       │       └── AboutChatbot.tsx # Explains RAG + PDF view
+│       └── public/data.pdf      # NIST CSF document
+│
 ├── screenshots/
-│   └── chat-ui.png             # UI preview
+│   ├── home.png
+│   ├── chat-ui.png
+│   ├── about-rag1.png
+│   ├── about-rag2.png
+│   └── about-rag3.png
+│
 └── README.md
-```
 
 ---
 
-## 💻 Sample Code (RAG Flow)
+## 🧠 Sample Code (RAG Flow)
 
 ```ts
-// Step 1: Embed user question
+// Step 1: Embed user query
 const embedding = await openai.embeddings.create({
   model: "text-embedding-3-small",
   input: userQuestion,
 });
 
-// Step 2: Query Pinecone
+// Step 2: Search Pinecone for top 5 related chunks
 const results = await pinecone.index("cybersecvectordb")
-  .namespace("ns1")
+  .namespace("nist-v2")
   .query({
     vector: embedding.data[0].embedding,
     topK: 5,
     includeMetadata: true,
   });
 
-// Step 3: Build context
+// Step 3: Construct context
 const context = results.matches.map(m => m.metadata.text).join("\n");
 
-// Step 4: GPT uses only that context
-const completion = await openai.chat.completions.create({
+// Step 4: Ask GPT using retrieved context
+const response = await openai.chat.completions.create({
   model: "gpt-3.5-turbo",
   messages: [
     {
       role: "system",
-      content: "You are a compliance assistant. Use ONLY the context."
+      content: "You are a cybersecurity assistant. Use ONLY the context provided to answer.",
     },
     {
       role: "user",
-      content: `Context:\n${context}\n\nQuestion: ${userQuestion}`
-    }
-  ]
+      content: `Context:\n${context}\n\nQuestion: ${userQuestion}`,
+    },
+  ],
+  temperature: 0.3,
 });
-```
-
----
-
-## 🌐 Live Preview
-
-Coming soon to Vercel.
-
----
-
-## 📷 Screenshots
-
-### Home Page
-
-![Home](./frontend/my-react-app/public/home.png)
 
 
-### Chat UI Example
+⸻
 
-![Chat](./frontend/my-react-app/public/chat-ui.png)
+📸 Screenshots
 
+🏠 Home Page
 
-### About Page with Vector Details
+💬 Chat UI
 
-![About](./frontend/my-react-app/public/about-rag1.png)
-![About](./frontend/my-react-app/public/about-rag2.png)
-![About](./frontend/my-react-app/public/about-rag3.png)
-
+📄 About Page with Vector Details
 
 
----
+⸻
 
-## 📚 Resources
+📥 How to Run Locally
 
-* [NIST Cybersecurity Framework](https://www.nist.gov/cyberframework)
-* [OpenAI Documentation](https://platform.openai.com/docs)
-* [Pinecone Vector DB](https://www.pinecone.io/)
+1. Backend Setup
 
----
-
-## 👨‍💻 Developer Info
-
-**Omkumar Vijaysinh Solanki**
-
-* 🔗 [LinkedIn Profile](https://www.linkedin.com/in/omkumar-solanki-atluxuarywxtchbusinessmandeveloper2/)
-* 💻 [GitHub](https://github.com/tcoders16)
-* 💡 Full Stack Dev | iOS | Web3 | AI/ML | GPT Integrator
-
----
-
-## 📥 How to Run It Locally
-
-### Backend
-
-```bash
 cd backend
 npm install
 node server.js
-```
 
-### Frontend
+Make sure to include a .env file with:
 
-```bash
-cd frontend
+OPENAI_API_KEY=your_openai_key
+PINECONE_API_KEY=your_pinecone_key
+PINECONE_ENV=your_pinecone_env
+PINECONE_INDEX=your_index_name
+
+2. Frontend Setup
+
+cd frontend/my-react-app
 npm install
 npm run dev
-```
+
+
+⸻
+
+🌐 Live Preview
+
+Coming soon to Vercel
+
+⸻
+
+📚 Resources
+	•	NIST Cybersecurity Framework
+	•	OpenAI Platform
+	•	Pinecone Vector DB
+
+⸻
+
+👨‍💻 Developer Info
+
+Omkumar Vijaysinh Solanki
+	•	🔗 LinkedIn
+	•	💻 GitHub
+	•	⚡ iOS | Web3 | Full Stack | AI/ML | GPT Integrator
+
+⸻
+
+📜 License
+
+MIT License
 
 ---
 
-## 📜 License
-
-MIT License
+Let me know if you'd like me to generate a custom `README.md` badge header or GitHub stats footer as well.
