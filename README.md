@@ -79,11 +79,11 @@ const completion = await openai.chat.completions.create({
 
 ### 🏠 Home Page
 
-![Home](./frontend/my-react-app/public/home.png)
+![Home](./frontend/my-react-app/public/h.png)
 
 ### 💬 Chat UI Example
 
-![Chat](./frontend/my-react-app/public/chat-ui.png)
+![Chat](./frontend/my-react-app/public/chat.png)
 
 ### 📊 Vector Retrieval Explained
 
