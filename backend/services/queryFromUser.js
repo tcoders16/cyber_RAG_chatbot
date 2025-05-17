@@ -1,8 +1,15 @@
-import { configDotenv } from 'dotenv';
-configDotenv();
 import OpenAI from 'openai';
+import dotenv from 'dotenv';
 import { Pinecone } from '@pinecone-database/pinecone';
-import readline from 'readline';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+import path from 'path';
+// ES module __dirname workaround
+// ES module __dirname workaround
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 
 
