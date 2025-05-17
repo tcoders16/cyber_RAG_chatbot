@@ -1,11 +1,6 @@
 {
-  "projects": [
-    {
-      "src": "frontend/my-react-app",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "dist"
-      }
-    }
-  ]
+  "rootDirectory": "frontend/my-react-app",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "framework": "vite"
 }
