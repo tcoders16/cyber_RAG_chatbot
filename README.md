@@ -38,7 +38,7 @@ A sleek, interactive AI chatbot designed to answer questions using the **NIST Cy
 
 1. 📄 PDF is split into paragraphs (chunks)
 2. 🧠 Each chunk is embedded via OpenAI
-3. 🗃️ Stored in Pinecone with metadata
+3. 💃 Stored in Pinecone with metadata
 4. 🙋‍♂️ User's question is embedded
 5. 🔍 Pinecone returns top-matching chunks
 6. 🤖 GPT-3.5 is prompted with these chunks
