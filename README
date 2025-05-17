@@ -113,19 +113,19 @@ Coming soon to Vercel.
 
 ### Home Page
 
-![Home](./home.png)
+![Home](./frontend/my-react-app/public/home.png)
 
 
 ### Chat UI Example
 
-![Chat](./chat-ui.png)
+![Chat](./frontend/my-react-app/public/chat-ui.png)
 
 
 ### About Page with Vector Details
 
-![About](./about-rag1.png)
-![About](./about-rag2.png)
-![About](./about-rag3.png)
+![About](./frontend/my-react-app/public/about-rag1.png)
+![About](./frontend/my-react-app/public/about-rag2.png)
+![About](./frontend/my-react-app/public/about-rag3.png)
 
 
 
