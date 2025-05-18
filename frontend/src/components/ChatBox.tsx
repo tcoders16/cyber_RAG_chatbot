@@ -23,7 +23,7 @@ export default function ChatBox() {
     setInput('');
 
     try {
-      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}`, {
+      const res = await fetch('https://cyber-rag-chatbot.vercel.app/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: userText }),

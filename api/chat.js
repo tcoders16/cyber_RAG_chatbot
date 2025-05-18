@@ -1,5 +1,5 @@
 // api/chat.js
-import { queryFromUser } from '../services/queryFromUser';
+import { queryFromUser } from '../backend/services/queryFromUser';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
