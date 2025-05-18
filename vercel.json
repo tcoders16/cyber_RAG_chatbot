@@ -1,5 +1,5 @@
 {
-  "rootDirectory": "./frontend/my-react-app",
+  "rootDirectory": "frontend/my-react-app",
   "buildCommand": "npm install && npm run build",
   "outputDirectory": "dist"
 }
