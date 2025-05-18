@@ -1,5 +1,4 @@
 {
-  "rootDirectory": "frontend/my-react-app",
-  "buildCommand": "vite build",
-  "outputDirectory": "dist"
+  "rootDirectory": "frontend/my-react-app"
+
 }
