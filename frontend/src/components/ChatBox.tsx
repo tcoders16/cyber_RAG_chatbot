@@ -18,11 +18,11 @@ export default function ChatBox() {
     setInput('');
 
     try {
-      const res = await fetch('http://localhost:5001/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: userText }),
-      });
+        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/chat`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: userText }),
+        });
 
       const data = await res.json();
       setMessages(prev => [...prev, { text: data.reply, role: 'bot' }]);
