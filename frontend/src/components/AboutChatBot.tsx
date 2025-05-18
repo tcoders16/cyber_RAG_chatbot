@@ -1,88 +1,75 @@
-
-
 const AboutChatbot = () => {
   return (
     <div
       className="bg-gradient-to-br from-[#0d0d0d] via-[#0a0f2a] to-[#1a0025] min-h-screen text-white"
       style={{ fontFamily: 'Poppins, sans-serif' }}
     >
-      <div className="max-w-5xl mx-auto px-6 py-10">
+      <div className="max-w-5xl mx-auto px-6 py-12 space-y-16">
+
         <h1
-          className="text-4xl mb-10 text-center tracking-wide"
-          style={{ color: '#00e0ff', fontFamily: 'Orbitron, sans-serif' }}
+          className="text-4xl font-bold text-center"
+          style={{ fontFamily: 'Orbitron, sans-serif', color: '#00e0ff' }}
         >
-          Cybersecurity Compliance Chatbot
+          Cybersecurity Compliance Chatbot — Technical Overview
         </h1>
 
-        {/* What it does */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold mb-2" style={{ fontFamily: 'Orbitron', color: '#00e0ff' }}>
+        {/* Section: What this chatbot does */}
+        <div className="space-y-3">
+          <h2 className="text-2xl font-semibold" style={{ fontFamily: 'Orbitron', color: '#00e0ff' }}>
             What this chatbot does
           </h2>
-          <p className="text-gray-300">
-            This chatbot answers questions about the NIST Cybersecurity Framework (CSF) Version 2.0.
-            You can ask about access control, logging, policies, or even who built this chatbot.
-            It only responds to relevant, compliance-related questions.
+          <p className="text-gray-300 leading-relaxed">
+            This chatbot provides AI-powered responses specifically about the NIST Cybersecurity Framework (CSF) Version 2.0. It enables developers and compliance teams to ask natural language questions and receive contextually accurate answers, grounded in official documentation.
           </p>
-        </section>
+        </div>
 
-        {/* How it works */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold mb-2" style={{ fontFamily: 'Orbitron', color: '#00e0ff' }}>
+        {/* Section: How it works */}
+        <div className="space-y-3">
+          <h2 className="text-2xl font-semibold" style={{ fontFamily: 'Orbitron', color: '#00e0ff' }}>
             How it works (RAG-based retrieval)
           </h2>
-          <p className="text-gray-300 mb-3">
-            The chatbot uses a technique called <strong>Retrieval-Augmented Generation (RAG)</strong>.
-            It retrieves relevant chunks from a vector database and uses those chunks to answer the question through GPT.
+          <p className="text-gray-300 leading-relaxed">
+            This chatbot follows a <strong>Retrieval-Augmented Generation (RAG)</strong> architecture combining OpenAI embeddings, Pinecone vector search, and GPT-3.5 to generate grounded responses:
           </p>
-          <ul className="list-disc ml-6 text-gray-300 space-y-2">
-            <li>NIST CSF v2.0 PDF is split into paragraph-level "chunks"</li>
-            <li>Each chunk is converted into a vector using OpenAI's embedding model</li>
-            <li>Vectors are stored in <strong>Pinecone</strong> for fast similarity search</li>
-            <li>
-              When a question is asked:
-              <ul className="list-disc ml-6 mt-1">
-                <li>The question is also embedded into a vector</li>
-                <li>Pinecone finds the closest matching document chunks</li>
-                <li>These chunks are fed into GPT-3.5 along with your question</li>
-                <li>GPT answers based only on the retrieved content</li>
-              </ul>
-            </li>
+          <ul className="list-disc pl-6 space-y-1 text-gray-300">
+            <li><strong>Chunking</strong>: The NIST CSF PDF is split into semantic paragraph-level chunks</li>
+            <li><strong>Embedding</strong>: Each chunk is converted into a 1536-dimensional vector using OpenAI’s <code>text-embedding-3-small</code> model</li>
+            <li><strong>Storage</strong>: Vectors + metadata are stored in Pinecone for similarity-based querying</li>
+            <li><strong>Retrieval</strong>: User input is embedded and matched with top-k similar chunks</li>
+            <li><strong>Completion</strong>: Retrieved content is used as context for GPT-3.5 to answer accurately</li>
           </ul>
-        </section>
+        </div>
 
-        {/* Why it matters */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold mb-2" style={{ fontFamily: 'Orbitron', color: '#00e0ff' }}>
+        {/* Section: Why this matters */}
+        <div className="space-y-3">
+          <h2 className="text-2xl font-semibold" style={{ fontFamily: 'Orbitron', color: '#00e0ff' }}>
             Why this matters
           </h2>
-          <ul className="list-disc ml-6 text-gray-300 space-y-1">
-            <li>Manual compliance reading is slow and error-prone</li>
-            <li>This bot gives instant answers from NIST documentation</li>
-            <li>Ideal for DevSecOps, security auditors, CISOs, and students</li>
+          <ul className="list-disc pl-6 space-y-1 text-gray-300">
+            <li>⚡ Enables fast, document-backed cybersecurity Q&A</li>
+            <li>📘 Reduces the need to manually read large PDFs</li>
+            <li>🧠 Ideal for devs, compliance teams, DevSecOps engineers, and CISOs</li>
           </ul>
-        </section>
+        </div>
 
-        {/* What is ChatGPT */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold mb-2" style={{ fontFamily: 'Orbitron', color: '#00e0ff' }}>
-            What is ChatGPT's role?
+        {/* Section: ChatGPT role */}
+        <div className="space-y-3">
+          <h2 className="text-2xl font-semibold" style={{ fontFamily: 'Orbitron', color: '#00e0ff' }}>
+            What is ChatGPT’s role?
           </h2>
-          <p className="text-gray-300">
-            ChatGPT is used only as a language generator. It receives extracted context from Pinecone and is instructed:
-            <em>“Only answer based on this context.”</em> This ensures the response is grounded and accurate.
+          <p className="text-gray-300 leading-relaxed">
+            ChatGPT is used purely for language generation. It does not hallucinate new answers because it is constrained to only respond using the retrieved context from Pinecone. This ensures factual accuracy.
           </p>
-        </section>
+        </div>
 
-        {/* Pinecone data format */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold mb-2" style={{ fontFamily: 'Orbitron', color: '#00e0ff' }}>
+        {/* Section: Pinecone data */}
+        <div className="space-y-3">
+          <h2 className="text-2xl font-semibold" style={{ fontFamily: 'Orbitron', color: '#00e0ff' }}>
             How Pinecone stores and returns data
           </h2>
 
-          <p className="text-gray-300 mb-4">Each chunk is stored with its vector and text metadata:</p>
-          <div className="bg-[#1a1a1a] text-sm p-4 rounded-md mb-4 overflow-x-auto border border-gray-600">
-            <pre className="text-[#00ff90]">
+          <p className="text-gray-300">Each embedded chunk is stored with an ID, vector array, and its original paragraph as metadata:</p>
+          <pre className="bg-[#1a1a1a] text-sm p-4 rounded-md overflow-x-auto border border-gray-600 text-[#00ff90]" style={{ fontFamily: 'Fira Code, monospace' }}>
 {`{
   id: "chunk_015",
   values: [0.025, -0.043, 0.112, ...],
@@ -90,14 +77,10 @@ const AboutChatbot = () => {
     text: "Access control includes the processes, policies, and technologies..."
   }
 }`}
-            </pre>
-          </div>
+          </pre>
 
-          <p className="text-gray-300 mb-2">
-            Pinecone query result format:
-          </p>
-          <div className="bg-[#1a1a1a] text-sm p-4 rounded-md overflow-x-auto border border-gray-600">
-            <pre className="text-[#00e0ff]">
+          <p className="text-gray-300 mt-2">Query results look like this:</p>
+          <pre className="bg-[#1a1a1a] text-sm p-4 rounded-md overflow-x-auto border border-gray-600 text-[#00e0ff]" style={{ fontFamily: 'Fira Code, monospace' }}>
 {`[
   {
     score: 0.912,
@@ -112,17 +95,16 @@ const AboutChatbot = () => {
     }
   }
 ]`}
-            </pre>
-          </div>
-        </section>
+          </pre>
+        </div>
 
-        {/* RAG Backend Code Block */}
-        <section className="mb-12">
-          <h2 className="text-xl font-semibold mb-4" style={{ fontFamily: 'Orbitron', color: '#00e0ff' }}>
-            Sample Backend Code for Retrieval-Augmented Generation
+        {/* Section: RAG backend code */}
+        <div className="space-y-3">
+          <h2 className="text-2xl font-semibold" style={{ fontFamily: 'Orbitron', color: '#00e0ff' }}>
+            Backend RAG Logic (Node.js)
           </h2>
-          <div className="bg-[#1a1a1a] text-xs p-4 rounded-md overflow-x-auto border border-gray-600 text-[#00ff90] font-mono leading-relaxed">
-            <pre>
+          <p className="text-gray-300">Here's how the RAG process works step-by-step:</p>
+          <pre className="bg-[#1a1a1a] text-xs p-4 rounded-md overflow-x-auto border border-gray-600 text-[#00ff90]" style={{ fontFamily: 'Fira Code, monospace' }}>
 {`// Step 1: Embed the user's question
 const embedding = await openai.embeddings.create({
   model: "text-embedding-3-small",
@@ -147,22 +129,21 @@ const completion = await openai.chat.completions.create({
   messages: [
     {
       role: "system",
-      content: \`You are a compliance assistant. Use only the context below. If it's missing, say so.\`,
+      content: 'You are a compliance assistant. Use only the context below. If it's missing, say so.',
     },
     {
       role: "user",
-      content: \`Context:\n\${context}\n\nQuestion: \${userQuestion}\`,
+      content: 'Context:\n$ {context}\n\nQuestion: $ {userQuestion}',
     },
   ],
   temperature: 0.3,
 });`}
-            </pre>
-          </div>
-        </section>
+          </pre>
+        </div>
 
-        {/* PDF Viewer */}
-        <section className="mb-12">
-          <h2 className="text-xl font-semibold mb-2" style={{ fontFamily: 'Orbitron', color: '#00e0ff' }}>
+        {/* Section: PDF viewer */}
+        <div className="space-y-3">
+          <h2 className="text-2xl font-semibold" style={{ fontFamily: 'Orbitron', color: '#00e0ff' }}>
             View the NIST CSF PDF (v2.0)
           </h2>
           <iframe
@@ -171,31 +152,14 @@ const completion = await openai.chat.completions.create({
             className="w-full h-[700px] border border-gray-700 rounded-md"
           />
           <p className="text-sm mt-2 text-gray-400">
-            Source: {" "}
-            <a
-              href="https://www.nist.gov/cyberframework"
-              className="underline"
-              style={{ color: '#00e0ff' }}
-              target="_blank"
-              rel="noreferrer"
-            >
-              NIST Cybersecurity Framework Official Site
-            </a>
+            Source: <a href="https://www.nist.gov/cyberframework" className="underline" style={{ color: '#00e0ff' }} target="_blank" rel="noreferrer">NIST Cybersecurity Framework Official Site</a>
           </p>
-        </section>
+        </div>
 
-
-
-      {/* Footer Section */}
-      <footer className="text-center text-gray-500 text-sm border-t border-gray-800 py-6">
-        <p className="mb-1">This chatbot helps users understand cybersecurity and legal compliance topics through AI-powered conversation.</p>
-        <p>
-          Designed & Developed by{" "}
-          <span style={{ fontFamily: 'Orbitron', color: '#00e0ff' }}>
-            Omkumar Solanki
-          </span>
-        </p>
-      </footer>
+        {/* Footer */}
+        <footer className="text-center text-gray-500 text-sm border-gray-800 pt-8 pb-4">
+          <p className="mb-1">This chatbot is a live demo of RAG using OpenAI + Pinecone, ideal for building compliant, secure, and factual assistants.</p>
+        </footer>
       </div>
     </div>
   );

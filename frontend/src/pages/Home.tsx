@@ -15,16 +15,19 @@ export default function Home() {
           className="text-4xl text-center mb-4 tracking-wide"
           style={{ fontFamily: 'Orbitron, sans-serif', color: '#00e0ff' }}
         >
-          Lawyer Chat Assistant
+          Cybersecurity RAG Chatbot (GPT + Pinecone)
         </h1>
 
-        {/* Subheading Description */}
+        {/* Architecture Highlight */}
+        <div className="bg-[#121212] border border-[#333] text-center text-sm sm:text-base text-gray-100 rounded-xl px-6 py-4 mb-6 shadow-lg leading-relaxed">
+          ⚙️ Built using <strong>OpenAI Embeddings</strong>, <strong>Pinecone Vector DB</strong>, and <strong>GPT-3.5</strong> via a Retrieval-Augmented Generation (RAG) pipeline.  
+          Your input is embedded, matched against NIST CSF v2.0 chunks, and answered contextually by GPT with zero hallucination.
+        </div>
+
+        {/* Subheading for Engineers */}
         <p className="text-center text-sm text-gray-300 mb-10 max-w-3xl mx-auto leading-relaxed">
-          This AI-powered assistant helps you understand legal and cybersecurity compliance
-          using the NIST Cybersecurity Framework (CSF) Version 2.0. You can ask questions
-          about access control, risk management, policies, logging, incident response, and more.
-          The chatbot retrieves real document-backed answers using vector search and GPT technology.
-          You can also ask about the assistant’s design, technology, or its developer, Omkumar Solanki.
+          This assistant demonstrates a full-stack AI pipeline: document chunking → vector embedding → semantic retrieval → context-constrained LLM completion.  
+          Built for compliance, but extensible to any domain-specific RAG system. Explore its NLP workflow, vector indexing strategy, or prompt design by asking how it works.
         </p>
 
         {/* Chat Interface */}
@@ -32,13 +35,9 @@ export default function Home() {
       </div>
 
       {/* Footer Section */}
-      <footer className="text-center text-gray-500 text-sm border-t border-gray-800 py-6">
-        <p className="mb-1">This chatbot helps users understand cybersecurity and legal compliance topics through AI-powered conversation.</p>
-        <p>
-          Designed & Developed by{" "}
-          <span style={{ fontFamily: 'Orbitron', color: '#00e0ff' }}>
-            Omkumar Solanki
-          </span>
+      <footer className="text-center text-gray-400 text-sm border-t border-gray-800 py-6">
+        <p className="mb-1">
+          🔍 Uses OpenAI embeddings (1536-d) for semantic similarity. Queries Pinecone for top-k context and routes it to GPT-3.5. Answers are strictly context-bounded.
         </p>
       </footer>
     </div>
