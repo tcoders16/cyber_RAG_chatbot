@@ -1,5 +1,5 @@
 {
   "rootDirectory": "frontend/my-react-app",
-  "buildCommand": "npm install && npm run dev",
+  "buildCommand": "vite build",
   "outputDirectory": "dist"
 }
