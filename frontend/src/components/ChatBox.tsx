@@ -23,7 +23,7 @@ export default function ChatBox() {
     setInput('');
 
     try {
-      const res = await fetch('https://cyber-rag-chatbot.vercel.app/api/chat', {
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: userText }),
@@ -39,18 +39,20 @@ export default function ChatBox() {
 
   return (
     <div
-      className="max-w-4xl mx-auto p-6 rounded-2xl border border-[#1f1f1f] shadow-xl flex flex-col h-[92vh]"
+      className="max-w-5xl mx-auto px-4 sm:px-6 md:px-8 py-6 sm:py-8 flex flex-col min-h-[100dvh]"
       style={{ backgroundColor: '#0d0d0d', fontFamily: 'Poppins, sans-serif', color: 'white' }}
     >
       {/* Header */}
       <div className="mb-4">
         <h2
-          className="text-3xl tracking-wide mb-1"
+          className="text-2xl sm:text-3xl md:text-4xl tracking-wide mb-1 text-center"
           style={{ fontFamily: 'Orbitron, sans-serif', color: '#00e0ff' }}
         >
           Cyber Compliance Assistant
         </h2>
-        <p className="text-sm text-gray-400">Ask about NIST CSF v2.0 or the chatbot's architecture and creator.</p>
+        <p className="text-sm text-center text-gray-400">
+          Ask about NIST CSF v2.0 or the chatbot's architecture and creator.
+        </p>
       </div>
 
       {/* Vector toggle */}
@@ -96,11 +98,11 @@ export default function ChatBox() {
       </div>
 
       {/* Chat messages */}
-      <div className="flex-1 overflow-y-auto pr-2 space-y-3 text-sm">
+      <div className="flex-1 overflow-y-auto space-y-3 pr-1 text-sm mb-4">
         {messages.map((msg, i) => (
           <div
             key={i}
-            className={`p-3 rounded-lg w-fit max-w-lg leading-relaxed ${
+            className={`p-3 rounded-lg w-fit max-w-[90%] sm:max-w-lg leading-relaxed ${
               msg.role === 'user'
                 ? 'ml-auto bg-[#001d3d] text-[#00e0ff]'
                 : msg.text.includes('Unable to answer')
@@ -114,8 +116,8 @@ export default function ChatBox() {
         <div ref={scrollRef} />
       </div>
 
-      {/* Input */}
-      <div className="flex gap-3 mt-5">
+      {/* Input box */}
+      <div className="flex flex-col sm:flex-row gap-3 mt-auto">
         <input
           type="text"
           value={input}
@@ -127,7 +129,7 @@ export default function ChatBox() {
         />
         <button
           onClick={handleSend}
-          className="px-6 py-2 rounded-lg text-black font-semibold shadow hover:brightness-125 transition"
+          className="w-full sm:w-auto px-6 py-2 rounded-lg text-black font-semibold shadow hover:brightness-125 transition"
           style={{ backgroundColor: '#00e0ff', fontFamily: 'Orbitron, sans-serif' }}
         >
           Send
@@ -135,7 +137,7 @@ export default function ChatBox() {
       </div>
 
       {/* Footer */}
-      <footer className="text-center text-gray-500 text-sm pt-6">
+      <footer className="text-center text-gray-500 text-xs sm:text-sm pt-6 mt-4">
         Developed by <span className="text-[#00e0ff]" style={{ fontFamily: 'Orbitron' }}>Omkumar Solanki</span>
       </footer>
     </div>
